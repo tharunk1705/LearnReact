@@ -1,36 +1,39 @@
 import React, { Component } from 'react';
 import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reactstrap';
-
+import Dishdetail from './DishdetailComponent';
 class Menu extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            selectedDish : null
+            selectedDish : null,
+            dishComment : null
         }
     }
 
     onDishSelect(dish){
-        this.setState({selectedDish: dish});
+        this.setState({selectedDish: dish,
+            dishComment : dish.comments
+        });
     }
 
-    renderDish(dish){
-        if (dish != null) {
-            return(
-                <Card>
-                    <CardImg width="100%" src={dish.image} alt={dish.name}/>
-                    <CardBody>
-                        <CardTitle >{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
-            )
-        }
-        else{
-            return(
-                <div></div>
-            )
-        }
-    }
+    // renderDish(dish){
+    //     if (dish != null) {
+    //         return(
+    //             <Card>
+    //                 <CardImg width="100%" src={dish.image} alt={dish.name}/>
+    //                 <CardBody>
+    //                     <CardTitle >{dish.name}</CardTitle>
+    //                     <CardText>{dish.description}</CardText>
+    //                 </CardBody>
+    //             </Card>
+    //         )
+    //     }
+    //     else{
+    //         return(
+    //             <div></div>
+    //         )
+    //     }
+    // }
 
     render(){
 
@@ -54,9 +57,8 @@ class Menu extends Component{
                        {menu}
                 </div>
 
-                <div className="row">
-                    {this.renderDish(this.state.selectedDish)}
-                </div>
+                <Dishdetail dishInfo = {this.state.selectedDish} comments={this.state.dishComment} />
+
             </div>
         );
     }
