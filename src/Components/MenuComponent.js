@@ -28,8 +28,8 @@ function RenderMenuItem ({dish, onClick}) {
         });
 
         return(
-            <div className = "conatiner">
-                <div className = "row">
+            <div className = "container">
+                <div className = "row align-items-start">
                        <Breadcrumb>
                             <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
                             <BreadcrumbItem active>Menu</BreadcrumbItem>
