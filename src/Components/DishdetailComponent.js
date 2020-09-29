@@ -24,8 +24,8 @@ class CommentForm extends Component{
         })
     }
     handleSubmit(values) {
-        console.log("Current state is: " +JSON.stringify(values));
-        alert("Current state is: " +JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.toggleModal();
     }
     render(){
         return(
@@ -52,9 +52,9 @@ class CommentForm extends Component{
                                 </Col>
                             </Row>
                             <Row className="form-group">
-                                <Label htmlFor="customername" md={6}>Your Name</Label>
+                                <Label htmlFor="author" md={6}>Your Name</Label>
                                 <Col md={12}>
-                                    <Control.text model=".customername" id="customername" name="customername"
+                                    <Control.text model=".author" id="author" name="author"
                                         placeholder="Your Name"
                                         className="form-control"
                                         validators={{
@@ -62,7 +62,7 @@ class CommentForm extends Component{
                                         }}
                                     />
                                     <Errors className="text-danger" 
-                                    model=".customername" 
+                                    model=".author" 
                                     show="touched"
                                     messages={{
                                         required : "Required",
@@ -74,9 +74,9 @@ class CommentForm extends Component{
                                 </Col>
                             </Row>
                             <Row className="form-group">
-                                <Label htmlFor="customercomment" md={6}>Comment</Label>
+                                <Label htmlFor="comment" md={6}>Comment</Label>
                                 <Col md={12}>
-                                    <Control.textarea model=".customercomment" id="customercomment" name="customercomment"
+                                    <Control.textarea model=".comment" id="comment" name="comment"
                                         rows="6"
                                         className="form-control"
                                     />
@@ -117,8 +117,8 @@ function RenderDish({dish}) {
 }
 
 
-function RenderComments({comments}) {
-    const coments = comments.map(comment => {
+function RenderComments({comments, addComment, dishId}) {
+    const commentsNew = comments.map(comment => {
         return (
             
                 <li key={comment.id}>
@@ -143,9 +143,9 @@ function RenderComments({comments}) {
             <div className="container">
                 <h4> Comments </h4>
                 <ul className='list-unstyled'>
-                    {coments}
+                    {commentsNew}
                 </ul>
-                <CommentForm />
+                <CommentForm dishId={dishId} addComment={addComment}/>
             </div>
         </div>
     )
@@ -178,7 +178,10 @@ const DishDetail = (props) => {
                     <RenderDish dish={props.dish} />
                 </div>
                 <div className="col-12 col-md-5 m-1">
-                    <RenderComments comments={props.comments} />
+                    <RenderComments comments={props.comments}
+                        addComment={props.addComment}
+                        dishId = {props.dish.id}
+                    />
                 </div>
             </div>
         </div>
